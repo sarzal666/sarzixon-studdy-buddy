@@ -4,7 +4,7 @@ import { StyledButton } from "./Button.styles";
 
 const Button = (props) => {
   return (
-    <StyledButton>
+    <StyledButton {...props}>
       {props.icon === "delete" ? <DeleteIcon /> : "X"}
     </StyledButton>
   );

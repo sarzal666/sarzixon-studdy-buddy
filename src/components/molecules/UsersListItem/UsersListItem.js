@@ -8,7 +8,10 @@ import UsersListName from "../../atoms/UsersListName/UsersListName";
 import { Wrapper } from "./UsersListItem.styles";
 // import styles from "./UsersListItem.module.scss";
 
-const UsersListItem = ({ userData: { average, name, attendance = "0%" } }) => {
+const UsersListItem = ({
+  deleteUser,
+  userData: { average, name, attendance = "0%" },
+}) => {
   return (
     // <li className={styles.user}> css modules
     // <li className={[styles.user, styles.hasBorder].join(" ")}> // two ways of applying more styles , array or string
@@ -16,7 +19,7 @@ const UsersListItem = ({ userData: { average, name, attendance = "0%" } }) => {
     <Wrapper>
       <Grade average={average} />
       <UsersListName name={name} attendance={attendance} />
-      <Button icon={"delete"} />
+      <Button icon={"delete"} onClick={() => deleteUser(name)} />
     </Wrapper>
   );
 };

@@ -1,4 +1,4 @@
-export const users = [
+export const usersData = [
   {
     name: "Michał Sarzała",
     attendance: "38%",
