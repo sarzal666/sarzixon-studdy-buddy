@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // import deleteIcon from "../../assets/icons/delete-icon.svg";
 
-import Button from "../../atoms/Button/Button";
+import DeleteButton from "../../atoms/DeleteButton/DeleteButton";
 import Grade from "../../atoms/Grade/Grade";
 import UsersListName from "../../atoms/UsersListName/UsersListName";
 import { Wrapper } from "./UsersListItem.styles";
@@ -11,6 +11,7 @@ import { Wrapper } from "./UsersListItem.styles";
 const UsersListItem = ({
   deleteUser,
   userData: { average, name, attendance = "0%" },
+  userKey,
 }) => {
   return (
     // <li className={styles.user}> css modules
@@ -19,7 +20,7 @@ const UsersListItem = ({
     <Wrapper>
       <Grade average={average} />
       <UsersListName name={name} attendance={attendance} />
-      <Button icon={"delete"} onClick={() => deleteUser(name)} />
+      <DeleteButton icon={"delete"} onClick={() => deleteUser(userKey)} />
     </Wrapper>
   );
 };
