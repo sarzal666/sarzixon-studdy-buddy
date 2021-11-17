@@ -6,30 +6,43 @@ import FormField from "../../molecules/FormField/FormField";
 import { Button } from "../../atoms/Button/Button";
 
 function UsersList(props) {
-  const [users, setUsers] = useState(usersData);
-  const [nameValue, setNameValue] = useState("");
-  const [averageValue, setAverageValue] = useState("");
-  const [attendanceValue, setAttendanceValue] = useState("");
-
-  const handleNameChange = (event) => {
-    setNameValue(event.target.value);
+  const initFormData = {
+    name: "",
+    average: "",
+    attendance: "",
   };
 
-  const handleAverageChange = (event) => {
-    setAverageValue(event.target.value);
-  };
+  const [users, setUsers] = useState(usersData || []);
+  const [formValues, setFormValues] = useState(initFormData);
 
-  const handleAttendanceChange = (event) => {
-    setAttendanceValue(event.target.value);
+  const handleInputChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]:
+        e.target.name === "average"
+          ? parseFloat(e.target.value)
+          : e.target.value,
+    });
   };
 
   function deleteUser(key) {
     const filteredUsers = users.filter((user, index) => {
-      console.log(key);
-      console.log(index);
       return index !== key;
     });
     setUsers(filteredUsers);
+  }
+
+  function addUser(userData) {
+    setUsers([
+      ...users,
+      {
+        name: userData.name,
+        average: userData.average,
+        attendance: userData.attendance,
+      },
+    ]);
+
+    setFormValues(initFormData);
   }
 
   return (
@@ -39,41 +52,28 @@ function UsersList(props) {
         <FormField
           label={"name"}
           id={"newUserName"}
-          name={"newUserName"}
+          name={"name"}
           type={"text"}
-          value={nameValue}
-          onChange={handleNameChange}
+          value={formValues.name}
+          onChange={handleInputChange}
         />
         <FormField
           label={"average"}
           id={"newUserAverage"}
-          name={"newUserAverage"}
+          name={"average"}
           type={"text"}
-          value={averageValue}
-          onChange={handleAverageChange}
+          value={formValues.average}
+          onChange={handleInputChange}
         />
         <FormField
           label={"attendance"}
           id={"newUserAttendance"}
-          name={"newUserAttendance"}
+          name={"attendance"}
           type={"text"}
-          value={attendanceValue}
-          onChange={handleAttendanceChange}
+          value={formValues.attendance}
+          onChange={handleInputChange}
         />
-        <Button
-          onClick={() =>
-            setUsers([
-              ...users,
-              {
-                name: nameValue,
-                attendance: attendanceValue,
-                average: parseFloat(averageValue),
-              },
-            ])
-          }
-        >
-          Add
-        </Button>
+        <Button onClick={() => addUser(formValues)}>Add</Button>
       </Wrapper>
 
       <Wrapper>
@@ -92,42 +92,5 @@ function UsersList(props) {
     </>
   );
 }
-
-// class UsersList extends React.Component {
-//   state = {
-//     users,
-//   };
-//
-//   /*
-//    * setState is asynchronous function
-//    * */
-//
-//   componentDidMount() {}
-//
-//   componentDidUpdate(prevProps, prevState, snapshot) {}
-//
-//   componentWillUnmount() {}
-//
-//   deleteUser = (name) => {
-//     const filteredUsers = this.state.users.filter((user) => user.name !== name);
-//     this.setState({ users: filteredUsers });
-//   };
-//
-//   render() {
-//     return (
-//       <Wrapper>
-//         <StyledList>
-//           {this.state.users.map((userData) => (
-//             <UsersListItem
-//               userData={userData}
-//               key={userData.name}
-//               deleteUser={this.deleteUser}
-//             />
-//           ))}
-//         </StyledList>
-//       </Wrapper>
-//     );
-//   }
-// }
 
 export default UsersList;
